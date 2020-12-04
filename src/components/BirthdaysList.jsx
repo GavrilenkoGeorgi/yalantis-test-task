@@ -43,22 +43,23 @@ const BirtdayList = () => {
 		return <span>{birthday.toLocaleString('en-us', options)} year</span> */
 	}
 
-	return <div style={{ border: '1px solid green', width: '50%' }}>
+	return <section className="birthdays-section">
 		<h1>Employees birthday</h1>
 		{groupedEmployees.length
 			? groupedEmployees.map(group =>
-				<div key={group.month}>
-					{group.month}
+				<div key={group.month} className="month-group">
+					<h2>{group.month}</h2>
 					<ul>
 						{group.employees.map(person =>
 							<li key={person.id}>
-								{person.lastName} {person.firstName} - {formatDateOfBirth(person.dob)}
+								{person.lastName} {person.firstName}
+								 - {formatDateOfBirth(person.dob)}
 							</li>)}
 					</ul>
 				</div>
 			)
 			: <>No selected employees</>}
-	</div>
+	</section>
 }
 
 export default BirtdayList

@@ -2,13 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export const Home = () => {
-	console.log('Home comp.')
-	return <>
-		<h1>Тестове завдання для Yalantis React.js School</h1>
-		<div>
+	return <section className="home-container">
+		<h1>Тестове завдання для Yalantis React.js School (online)</h1>
+		<article className="greeting">
 			<Link to="/employees">Employees page</Link>
-		</div>
-	</>
+			<p>(Завантажити список співробітників з сервера,
+				при потраплянні на сторінку <Link to="/employees">employees</Link>)</p>
+		</article>
+	</section>
 }
 
 export default Home
