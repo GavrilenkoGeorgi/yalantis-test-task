@@ -5,7 +5,7 @@ import { setEmployeeCheckedStatus } from '../reducers/employeesReducer'
 
 import CheckBox from './CheckBox'
 
-const EmployeesByChar = (props) => {
+const EmployeesByChar = ({ letter, list }) => {
 
 	const dispatch = useDispatch()
 
@@ -15,10 +15,10 @@ const EmployeesByChar = (props) => {
 
 	return <>
 		<div className="employees-by-letter">
-			<h2>{props.letter}</h2>
+			<h2>{letter}</h2>
 			<ul className="employee-list">
-				{props.list.length
-					? props.list.map(employee =>
+				{list.length
+					? list.map(employee =>
 						<li key={employee.id}>
 							<span className="employee-name">
 								{employee.lastName} {employee.firstName}
@@ -29,7 +29,8 @@ const EmployeesByChar = (props) => {
 									name={employee.id}
 									checked={employee.checked}
 									label={employee.checked ? 'checked' : ''}
-									onChange={() => checkEmployee(props.letter, employee.id)}
+									aria-label={`check-employee-${employee.lastName}`}
+									onChange={() => checkEmployee(letter, employee.id)}
 								/>
 							</span>
 						</li>)

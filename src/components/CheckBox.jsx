@@ -8,12 +8,9 @@ const CheckBox = props => {
 	return <>
 		<input
 			type="checkbox"
-			// id="scales"
-			// name="scales"
-			// checked
 			{ ...rest }
 		/>
-		<label htmlFor={label}>
+		<label htmlFor={rest.id}>
 			{label}
 		</label>
 	</>

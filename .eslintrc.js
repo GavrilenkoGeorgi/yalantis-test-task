@@ -5,12 +5,14 @@ module.exports = {
 			"es6": true
 	},
 	"globals": {
-			"process": true
+			"process": true,
+			"jest": true
 	},
 	"extends": [ 
 			"eslint:recommended",
 			"plugin:react/recommended",
 			"plugin:testing-library/react",
+			"plugin:jest/recommended"
 	],
 	"parser": "babel-eslint",
 	"parserOptions": {
@@ -23,7 +25,8 @@ module.exports = {
 	"plugins": [
 			"react",
 			"react-hooks",
-			"testing-library"
+			"testing-library",
+			"jest"
 	],
 	"settings": {
 		"react": {
@@ -49,6 +52,11 @@ module.exports = {
 		]
 	},
 	"rules": {
+		"jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error",
 		"react-hooks/rules-of-hooks": "error",
 		"react-hooks/exhaustive-deps": "warn",
 		"max-len": ["error", { "code": 120 }],

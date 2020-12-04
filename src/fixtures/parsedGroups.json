@@ -1,0 +1,40 @@
+[
+	{
+		"letter": "A",
+		"employees": [
+			{
+				"id":"5e00928d1a9ac4bd431ff876",
+				"firstName":"Toni",
+				"lastName":"Albert",
+				"dob":"2019-03-23T01:30:35.337Z",
+				"checked": false
+			},
+			{
+				"id":"5e00928dd8564cf882f0bb6a",
+				"firstName":"Felicia",
+				"lastName":"Ayers",
+				"dob":"2019-06-05T11:12:29.457Z",
+				"checked": false
+			}
+		]
+	},
+	{
+		"letter": "B",
+		"employees": [
+			{
+				"id": "5e00928dac694570760105c4",
+				"firstName": "Molina",
+				"lastName": "Baird",
+				"dob": "2019-01-07T03:26:17.817Z",
+				"checked": false
+			},
+			{
+				"id": "5e00928d751881156e9c3c98",
+				"firstName": "Clements",
+				"lastName": "Ballard",
+				"dob": "2019-04-09T19:23:23.170Z",
+				"checked": false
+			}
+		]
+	}
+]

@@ -52,13 +52,13 @@ const BirtdayList = () => {
 					<ul>
 						{group.employees.map(person =>
 							<li key={person.id}>
-								{person.lastName} {person.firstName}
-								 - {formatDateOfBirth(person.dob)}
+								{person.lastName} {person.firstName}{' '}
+								- {formatDateOfBirth(person.dob)}
 							</li>)}
 					</ul>
 				</div>
 			)
-			: <>No selected employees</>}
+			: <span>No selected employees</span>}
 	</section>
 }
 
