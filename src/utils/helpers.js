@@ -1,3 +1,5 @@
+import { letters, months } from './constants'
+
 export const sortByProperty = (propertyName, arrayOfObjects) => {
 	return arrayOfObjects.sort(function(a, b){
 		if(a[propertyName] < b[propertyName]) { return -1 }
@@ -6,8 +8,16 @@ export const sortByProperty = (propertyName, arrayOfObjects) => {
 	})
 }
 
+export const sortByMonth = (arrayOfObjects) => {
+	return arrayOfObjects.sort((a, b) => months.indexOf(a.month) - months.indexOf(b.month))
+}
+
+export const expiresInDays = days => {
+	const day = 86400000
+	return Date.now() + day * days
+}
+
 export const getEmptyGroups = arrayOfObjects => {
-	const letters = 'a b c d e f g h i j k l m n o p q r s t u v w x y z'
 	const alphabet = letters.toUpperCase().split(' ')
 	const emptyGroups = []
 
@@ -41,11 +51,8 @@ export const groupByMonth = arrayOfObjects => { // and this!
 
 	let data = arrayOfObjects.reduce((acc, item) => {
 		let month = getMonthFromDate(item.dob)
-
 		if(!acc[month]) acc[month] = { month, employees: [item] }
-
 		else acc[month].employees.push(item)
-
 		return acc
 	}, {})
 
@@ -78,7 +85,5 @@ export const selectCheckedUsers = (arrayOfObjects) => {
 
 export const getMonthFromDate = dateOfBirth => {
 	const date = new Date(dateOfBirth)
-	// eslint-disable-next-line
-	const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	return months[date.getMonth()]
 }

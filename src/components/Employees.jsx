@@ -1,9 +1,11 @@
 import React, { useEffect, useCallback, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { setEmployeesArray, setPreparedEmployeesArray } from '../reducers/employeesReducer'
+import { setEmployeesArray } from '../reducers/employeesReducer'
 import employeesService from '../services/employees'
-import { sortByProperty, getEmptyGroups, groupByLetter, addCheckBoxField } from '../utils/helpers'
+import localStorageHelper from '../utils/localStorageHelper'
+import { sortByProperty, getEmptyGroups, groupByLetter,
+	expiresInDays, addCheckBoxField } from '../utils/helpers'
 
 import EmployeesList from './EmployeesList'
 import BirtdaysList from './BirthdaysList'
@@ -11,19 +13,8 @@ import BirtdaysList from './BirthdaysList'
 const Employees = () => {
 
 	const dispatch = useDispatch()
-	const initialArray = useSelector(state => state.initialArray)
-	const preparedArray = useSelector(state => state.preparedArray)
+	const employees = useSelector(state => state.employees)
 	const [employeeGroups, setEmployeeGroups] = useState(null)
-
-	useEffect(() => {
-		employeesService.getAllEmployees()
-			.then(({ data }) => {
-				dispatch(setEmployeesArray(data))
-			})
-			.catch(error => {
-				console.error(error.message)
-			})
-	}, [dispatch])
 
 	const prepareUserData = useCallback((arrayOfEmployees) => {
 		const sorted = sortByProperty('lastName', arrayOfEmployees)
@@ -35,18 +26,37 @@ const Employees = () => {
 		return allGroups
 	}, [])
 
+	useEffect(() => {
+		const expirationDate = localStorageHelper.getEmployeesObjectProperty('expirationDate')
+		if (!expirationDate || (Date.now() > expirationDate)) {
+			// not set or expired
+			employeesService.getAllEmployees()
+				.then(({ data }) => {
+					const parsedData = prepareUserData(data)
+					dispatch(setEmployeesArray(parsedData))
+					localStorageHelper.setEmployeesObject({
+						employees: parsedData,
+						expirationDate: expiresInDays(7)
+					})
+				})
+				.catch(error => {
+					console.error(error.message)
+				})
+		} else { // restore saved state
+			const savedState = localStorageHelper.getEmployeesObjectProperty('employees')
+			dispatch(setEmployeesArray(savedState))
+		}
+	}, [dispatch, prepareUserData])
 
 	useEffect(() => {
-		if (initialArray)
-			dispatch(setPreparedEmployeesArray(prepareUserData(initialArray)))
-	}, [initialArray, prepareUserData, dispatch])
-
-	useEffect(() => {
-		setEmployeeGroups(preparedArray)
-	}, [preparedArray] )
+		// on change, update view
+		setEmployeeGroups(employees)
+		// save current state to LS
+		localStorageHelper.updateEmployeesObject(employees)
+	}, [employees] )
 
 	return <div style={{ display: 'flex' }}>
-		{preparedArray && <>
+		{employees && <>
 			<EmployeesList groups={employeeGroups}/>
 			<BirtdaysList />
 		</>}

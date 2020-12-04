@@ -1,25 +1,22 @@
 const employeesReducer = (state = {
-	initialArray: null,
-	preparedArray: null
+	employees: null
 }, action) => {
 
 	switch (action.type) {
 	case 'SET_EMPLOYEES_ARRAY':
-		return { ...state, initialArray: action.data }
-	case 'SET_PREPARED_EMPLOYEES_ARRAY':
-		return { ...state, preparedArray: action.data }
+		return { ...state, employees: action.data }
 	case 'CHECK_EMPLOYEE': {
 		const { data } = action
 		// get group of employees by letter
 		const { employees } =
-			state.preparedArray.find(group => group.letter === data.letter)
+			state.employees.find(group => group.letter === data.letter)
 		// update employee
 		const updatedEmployees = employees.map(employee =>
 			employee.id !== data.id
 				? employee
 				: { ...employee, checked: !employee.checked })
 
-		return { ...state, preparedArray: state.preparedArray.map(group =>
+		return { ...state, employees: state.employees.map(group =>
 			group.letter !== data.letter ? group : { ...group, employees: updatedEmployees }) }
 	}
 	default:
@@ -28,24 +25,12 @@ const employeesReducer = (state = {
 }
 
 /**
- * Get all employees
+ * Set employees array
  */
-export const setEmployeesArray = (data) => {
+export const setEmployeesArray = data => {
 	return async dispatch => {
 		dispatch ({
 			type: 'SET_EMPLOYEES_ARRAY',
-			data
-		})
-	}
-}
-
-/**
- * Set prepared employees array
- */
-export const setPreparedEmployeesArray = (data) => {
-	return async dispatch => {
-		dispatch ({
-			type: 'SET_PREPARED_EMPLOYEES_ARRAY',
 			data
 		})
 	}
