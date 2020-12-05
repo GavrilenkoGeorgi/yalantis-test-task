@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/yalantis-test-task/static/css/main.c8f52078.chunk.css",
-    "main.js": "/yalantis-test-task/static/js/main.2ea6699e.chunk.js",
-    "main.js.map": "/yalantis-test-task/static/js/main.2ea6699e.chunk.js.map",
+    "main.js": "/yalantis-test-task/static/js/main.b94971aa.chunk.js",
+    "main.js.map": "/yalantis-test-task/static/js/main.b94971aa.chunk.js.map",
     "runtime-main.js": "/yalantis-test-task/static/js/runtime-main.ea88391a.js",
     "runtime-main.js.map": "/yalantis-test-task/static/js/runtime-main.ea88391a.js.map",
-    "static/js/2.01c1a4e1.chunk.js": "/yalantis-test-task/static/js/2.01c1a4e1.chunk.js",
-    "static/js/2.01c1a4e1.chunk.js.map": "/yalantis-test-task/static/js/2.01c1a4e1.chunk.js.map",
+    "static/js/2.c57b4fbe.chunk.js": "/yalantis-test-task/static/js/2.c57b4fbe.chunk.js",
+    "static/js/2.c57b4fbe.chunk.js.map": "/yalantis-test-task/static/js/2.c57b4fbe.chunk.js.map",
     "index.html": "/yalantis-test-task/index.html",
     "static/css/main.c8f52078.chunk.css.map": "/yalantis-test-task/static/css/main.c8f52078.chunk.css.map",
-    "static/js/2.01c1a4e1.chunk.js.LICENSE.txt": "/yalantis-test-task/static/js/2.01c1a4e1.chunk.js.LICENSE.txt"
+    "static/js/2.c57b4fbe.chunk.js.LICENSE.txt": "/yalantis-test-task/static/js/2.c57b4fbe.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.ea88391a.js",
-    "static/js/2.01c1a4e1.chunk.js",
+    "static/js/2.c57b4fbe.chunk.js",
     "static/css/main.c8f52078.chunk.css",
-    "static/js/main.2ea6699e.chunk.js"
+    "static/js/main.b94971aa.chunk.js"
   ]
 }
