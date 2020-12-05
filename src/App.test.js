@@ -1,17 +1,23 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
+import { Provider } from 'react-redux'
+import store from './store/store'
+
 import App from './App'
 
 describe('<App /> component', () => {
 
 	beforeEach(() => {
-		render(<App />)
+		render(
+			<Provider store={store}>
+				<App />
+			</Provider>)
 	})
 
-	it('renders title and link to employees page', () => {
-		expect(screen.getByText(/Тестове завдання/i)).toBeInTheDocument()
-		const linkElement = screen.getByText(/Employees page/i)
-		expect(linkElement).toBeInTheDocument()
-		expect(linkElement).toHaveAttribute('href', '/employees')
+	it('renders employees page', async () => {
+		await waitFor(() => {
+			expect(screen.getByText('Employees')).toBeInTheDocument()
+			expect(screen.getByText('Employees birthday')).toBeInTheDocument()
+		})
 	})
 })

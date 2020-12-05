@@ -55,12 +55,12 @@ const Employees = () => {
 		localStorageHelper.updateEmployeesObject(employees)
 	}, [employees] )
 
-	return <div style={{ display: 'flex' }}>
+	return <>
 		{employees && <>
 			<EmployeesList groups={employeeGroups}/>
 			<BirtdaysList />
 		</>}
-	</div>
+	</>
 
 }
 
