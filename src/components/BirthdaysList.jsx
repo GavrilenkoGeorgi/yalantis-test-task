@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { selectCheckedUsers, sortByMonth,
+import { selectCheckedEmployees, sortByMonth,
 	groupByMonth, getMonthFromDate } from '../utils/helpers'
 
 const BirtdaysList = () => {
 
 	const employees = useSelector(state => state.employees)
-	const [checkedUsers, setCheckedUsers] = useState([])
+	const [checkedEmployees, setCheckedEmployees] = useState([])
 	const [groupedEmployees, setGroupedEmployees] = useState([])
 
 	useEffect(() => {
 		if (employees) {
-			setCheckedUsers(selectCheckedUsers(employees))
+			setCheckedEmployees(selectCheckedEmployees(employees))
 		}
 	}, [employees])
 
 	useEffect(() => {
-		if (checkedUsers.length) {
-			const grouped = groupByMonth(checkedUsers)
+		if (checkedEmployees.length) {
+			const grouped = groupByMonth(checkedEmployees)
 			setGroupedEmployees(sortByMonth(grouped))
 		} else setGroupedEmployees([])
-	}, [checkedUsers])
+	}, [checkedEmployees])
 
 	const formatDateOfBirth = date => {
 		const birthday = new Date(Date.parse(date))

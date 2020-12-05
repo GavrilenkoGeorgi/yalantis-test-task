@@ -1,5 +1,5 @@
 import { sortByProperty, expiresInDays, groupByLetter, addCheckBoxField,
-	getEmptyGroups, groupByMonth, selectCheckedUsers } from './helpers'
+	getEmptyGroups, groupByMonth, selectCheckedEmployees, getMonthFromDate } from './helpers'
 import users from '../fixtures/users.json'
 import parsedGroups from '../fixtures/parsedGroups.json'
 
@@ -19,19 +19,19 @@ describe('Helper utils', () => {
 
 	it('"sortByProperty" util sorts array of objects', () => {
 		const sorted = sortByProperty('lastName', users)
-		const [ user ] = sorted
-		expect(user.lastName).toEqual('Carson')
+		const [ employees ] = sorted
+		expect(employees.lastName).toEqual('Carson')
 	})
 
 	it('"sortByProperty" throws an error if supplied with invalid arguments', () => {
 		expect(() => sortByProperty(users))
 			.toThrowError('Can\'t sort, property name is missing.')
 
-		expect(() => sortByProperty('users'))
+		expect(() => sortByProperty('employees'))
 			.toThrowError('Can\'t sort, array of objects is missing.')
 	})
 
-	it('"groupByLetter" groups array of users by first letter of the last name', () => {
+	it('"groupByLetter" groups array of employeess by first letter of the last name', () => {
 		const grouped = groupByLetter(users)
 		const [ group ] = grouped
 
@@ -40,21 +40,21 @@ describe('Helper utils', () => {
 	})
 
 	it('"groupByLetter" throws an error if supplied with invalid arguments', () => {
-		expect(() => groupByLetter('users'))
-			.toThrowError('Can\'t group by last name first letter, array of user objects is missing.')
+		expect(() => groupByLetter('employees'))
+			.toThrowError('Can\'t group by last name first letter, array of employee objects is missing.')
 	})
 
-	it('"groupByMonth" groups array of users by month', () => {
+	it('"groupByMonth" groups array of employees by month', () => {
 		const grouped = groupByMonth(users)
 		expect(grouped).toHaveLength(5)
 	})
 
 	it('"groupByMonth" throws an error if supplied with invalid arguments', () => {
-		expect(() => groupByMonth('users'))
-			.toThrowError('Can\'t group by month, array of user objects is missing.')
+		expect(() => groupByMonth('employees'))
+			.toThrowError('Can\'t group by month, array of employee objects is missing.')
 	})
 
-	it('"addCheckBoxField" adds checkbox field to the grouped user objects', () => {
+	it('"addCheckBoxField" adds checkbox field to the grouped employee objects', () => {
 		const withCheckBoxes = addCheckBoxField(groupByLetter(users))
 
 		const [ group ] = withCheckBoxes
@@ -64,8 +64,8 @@ describe('Helper utils', () => {
 	})
 
 	it('"addCheckBoxField" throws an error if supplied with invalid arguments', () => {
-		expect(() => addCheckBoxField('groupedUsers'))
-			.toThrowError('Can\'t add checkboxes, array of user objects is missing.')
+		expect(() => addCheckBoxField('groupedEmployees'))
+			.toThrowError('Can\'t add checkboxes, array of employee objects is missing.')
 	})
 
 	it('"getEmptyGroups" correctly selects missing empty groups', () => {
@@ -77,11 +77,11 @@ describe('Helper utils', () => {
 	})
 
 	it('"getEmptyGroups" throws an error if supplied with invalid arguments', () => {
-		expect(() => getEmptyGroups('groupedUsers'))
+		expect(() => getEmptyGroups('groupedEmloyees'))
 			.toThrowError('Can\'t select missing groups, array of groups is missing.')
 	})
 
-	it('"selectCheckedUsers" selects onlt checked users from array of objects', () => {
+	it('"selectCheckedEmployees" selects onlt checked employees from array of objects', () => {
 		const [ group, secondGroup ] = parsedGroups
 		const [ employee ] = group.employees
 		const checkedEmployee = {
@@ -95,14 +95,21 @@ describe('Helper utils', () => {
 
 		const updatedGroups = [ { ...group, employees: updatedGroup }, secondGroup ]
 
-		const checkedUsers = selectCheckedUsers(updatedGroups)
-		expect(checkedUsers).toHaveLength(1)
-		expect(checkedUsers[0].id).toEqual(employee.id)
+		const checkedEmployees = selectCheckedEmployees(updatedGroups)
+		expect(checkedEmployees).toHaveLength(1)
+		expect(checkedEmployees[0].id).toEqual(employee.id)
 	})
 
-	it('"selectCheckedUsers" throws an error if supplied with invalid arguments', () => {
-		expect(() => selectCheckedUsers('users'))
-			.toThrowError('Can\'t select checked users, array of user objects is missing.')
+	it('"selectCheckedEmployees" throws an error if supplied with invalid arguments', () => {
+		expect(() => selectCheckedEmployees('employees'))
+			.toThrowError('Can\'t select checked employees, array of employee objects is missing.')
+	})
+
+	it('"getMonthFromDate" return name of month', () => {
+		const dateString = '2019-09-19T09:34:32.083Z'
+		const month = getMonthFromDate(dateString)
+
+		expect(month).toEqual('September')
 	})
 })
 
