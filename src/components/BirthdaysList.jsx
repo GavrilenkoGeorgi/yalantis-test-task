@@ -45,20 +45,27 @@ const BirtdaysList = () => {
 
 	return <section className="birthdays-section">
 		<h1>Employees birthday</h1>
-		{groupedEmployees.length
-			? groupedEmployees.map(group =>
-				<div key={group.month} className="month-group">
-					<h2>{group.month}</h2>
-					<ul>
-						{group.employees.map(person =>
-							<li key={person.id}>
-								{person.lastName} {person.firstName}{' '}
-								- {formatDateOfBirth(person.dob)}
-							</li>)}
-					</ul>
-				</div>
-			)
-			: <span>No selected employees</span>}
+		<div className="birthdays-list">
+			{groupedEmployees.length
+				? groupedEmployees.map(group =>
+					<div key={group.month} className="month-group">
+						<h2>{group.month}</h2>
+						<ul>
+							{group.employees.map(person =>
+								<li key={person.id}>
+									<span className="employee-birthday-name">
+										{person.lastName} {person.firstName} -{' '}
+									</span>
+									{formatDateOfBirth(person.dob)}
+								</li>)}
+						</ul>
+					</div>
+				)
+				: <p className="no-emps-to-show-message">
+						No selected employees
+				</p>
+			}
+		</div>
 	</section>
 }
 

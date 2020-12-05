@@ -13,32 +13,30 @@ const EmployeesByChar = ({ letter, list }) => {
 		dispatch(setEmployeeCheckedStatus(letter, id))
 	}
 
-	return <>
-		<div className="employees-by-letter">
-			<h2>{letter}</h2>
-			<ul className="employee-list">
-				{list.length
-					? list.map(employee =>
-						<li key={employee.id}>
-							<span className="employee-name">
-								{employee.lastName} {employee.firstName}
-							</span>
-							<span className="checkbox-container">
-								<CheckBox
-									id={employee.id}
-									name={employee.id}
-									checked={employee.checked}
-									label={employee.checked ? 'checked' : ''}
-									aria-label={`check-employee-${employee.lastName}`}
-									onChange={() => checkEmployee(letter, employee.id)}
-								/>
-							</span>
-						</li>)
-					: <>-----</>
-				}
-			</ul>
-		</div>
-	</>
+	return <div className="employees-by-letter">
+		<h2>{letter}</h2>
+		<ul className="employee-list">
+			{list.length
+				? list.map(employee =>
+					<li key={employee.id}>
+						<span className="employee-name">
+							{employee.lastName} {employee.firstName}
+						</span>
+						<span className="checkbox-container">
+							<CheckBox
+								id={employee.id}
+								name={employee.id}
+								checked={employee.checked}
+								label={employee.checked ? 'checked' : ''}
+								aria-label={`check-employee-${employee.lastName}`}
+								onChange={() => checkEmployee(letter, employee.id)}
+							/>
+						</span>
+					</li>)
+				: <>-----</>
+			}
+		</ul>
+	</div>
 }
 
 EmployeesByChar.propTypes = {
