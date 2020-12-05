@@ -24,7 +24,19 @@ export const sortByProperty = (propertyName, arrayOfObjects) => {
 	})
 }
 
-export const sortByMonth = (arrayOfObjects) => {
+/**
+ * Sort array of objects by month property
+ * @param {Object[]} arrayOfObjects - Array of employee groups
+ * @param {string} month - Month name of the group
+ * @throws Error if "days" arg is missing or invalid
+ *
+ * @return {Object[]} - Sorted array of objects
+ */
+
+export const sortByMonth = arrayOfObjects => {
+	if (!arrayOfObjects || !Array.isArray(arrayOfObjects))
+		throw new Error('Can\'t sort, array of objects is missing.')
+
 	return arrayOfObjects.sort((a, b) => months.indexOf(a.month) - months.indexOf(b.month))
 }
 
@@ -44,11 +56,12 @@ export const expiresInDays = days => {
 }
 
 /**
- * Select empty groups by letter to the array of grouped users
- * @param {Object[]} arrayOfObjects - Array of user groups
+ * Select empty groups by letter to the array of grouped employees
+ * @param {Object[]} arrayOfObjects - Array of employee groups
+ * @param {string} letter - Letter of the alphabet of the group
  * @throws - Will throw an error if arg is missing or invalid
  *
- * @returns {Object[]} - Array of empty groups to add to user groups array
+ * @returns {Object[]} - Array of empty groups to add to employee groups array
  */
 
 export const getEmptyGroups = arrayOfObjects => {
@@ -73,17 +86,23 @@ export const getEmptyGroups = arrayOfObjects => {
 }
 
 /**
- * Group array of users by first letter of their lastName
- * @param {Object[]} arrayOfObjects - Array of user objects
+ * Group array of employees by first letter of their lastName
+ * @param {Object[]} arrayOfObjects - Array of employee objects
+ * @param {Object} employee - Employee object
+ * @param {string} employee.id - Employee id
+ * @param {string} employee.firstName - Employee first name
+ * @param {string} employee.lastName - Employee last name
+ * @param {string} employee.dob - Employee date of birth
+ *
  * @throws - Will throw an error if arg is missing or invalid
  *
- * @returns {Object[]} - Grouped array of user objects
+ * @returns {Object[]} - Grouped array of employee objects
  */
 
 export const groupByLetter = arrayOfObjects => { // this!
 
 	if (!arrayOfObjects || !Array.isArray(arrayOfObjects))
-		throw new Error('Can\'t group by last name first letter, array of user objects is missing.')
+		throw new Error('Can\'t group by last name first letter, array of employee objects is missing.')
 
 	let data = arrayOfObjects.reduce((acc, item) => {
 		let letter = item.lastName[0]
@@ -97,17 +116,24 @@ export const groupByLetter = arrayOfObjects => { // this!
 }
 
 /**
- * Group array of users by birthday month
- * @param {Object[]} arrayOfObjects - Array of user objects
+ * Group array of employees by birthday month
+ * @param {Object[]} arrayOfObjects - Array of employee objects
+ * @param {Object} employee - Employee object
+ * @param {string} employee.id - Employee id
+ * @param {string} employee.firstName - Employee first name
+ * @param {string} employee.lastName - Employee last name
+ * @param {string} employee.dob - Employee date of birth
+ * @param {boolean} employee.checked - Employee "checked" status
+ *
  * @throws - Will throw an error if arg is missing or invalid
  *
- * @returns {Object[]} - Grouped array of user objects
+ * @returns {Object[]} - Grouped array of employee objects
  */
 
 export const groupByMonth = arrayOfObjects => { // and this!
 
 	if (!arrayOfObjects || !Array.isArray(arrayOfObjects))
-		throw new Error('Can\'t group by month, array of user objects is missing.')
+		throw new Error('Can\'t group by month, array of employee objects is missing.')
 
 	let data = arrayOfObjects.reduce((acc, item) => {
 		let month = getMonthFromDate(item.dob)
@@ -121,17 +147,26 @@ export const groupByMonth = arrayOfObjects => { // and this!
 }
 
 /**
- * Add checkboxes to the user objects
- * @param {Object[]} arrayOfObjects - Array of grouped users
+ * Add checkboxes to the employees objects
+ * @param {Object[]} arrayOfObjects - Array of grouped employees
+ * @param {Object} group - Grouped of employees
+ * @param {Object} group.letter - Group letter
+ * @param {Object[]} group.employees - Group of eployees for current letter
+ * @param {Object} employee - Employee object
+ * @param {Object} employee.id - Employee id
+ * @param {string} employee.firstName - Employee first name
+ * @param {string} employee.lastName - Employee last name
+ * @param {string} employee.dob - Employee date of birth
+ *
  * @throws - Will throw an error if arg is missing or invalid
  *
- * @returns {Object[]} - Array of user objects with checkboxes
+ * @returns {Object[]} - Array of grouped employee objects with added checkboxes
  */
 
 export const addCheckBoxField = arrayOfObjects => {
 
 	if (!arrayOfObjects || !Array.isArray(arrayOfObjects))
-		throw new Error('Can\'t add checkboxes, array of user objects is missing.')
+		throw new Error('Can\'t add checkboxes, array of employee objects is missing.')
 
 	for (let item of arrayOfObjects) {
 		for (let person of item.employees) {
@@ -142,17 +177,26 @@ export const addCheckBoxField = arrayOfObjects => {
 }
 
 /**
- * Selects only checked users from array of user objects
- * @param {Object[]} arrayOfObjects - Array of grouped users
+ * Selects only checked employees from array of employee objects
+ * @param {Object[]} arrayOfObjects - Array of grouped employees
+ * @param {Object} group - Grouped of employees
+ * @param {Object} group.letter - Group letter
+ * @param {Object[]} group.employees - Group of eployees for current letter
+ * @param {Object} employee - Employee object
+ * @param {Object} employee.id - Employee id
+ * @param {string} employee.firstName - Employee first name
+ * @param {string} employee.lastName - Employee last name
+ * @param {string} employee.dob - Employee date of birth
+ * @param {string} employee.cheked - Employee 'checked' status
  * @throws - Will throw an error if arg is missing or invalid
  *
- * @returns {Object[]} - Array of user with 'true' checked prop
+ * @returns {Object[]} - Array of employee with 'true' checked prop
  */
 
-export const selectCheckedUsers = arrayOfObjects => {
+export const selectCheckedEmployees = arrayOfObjects => {
 
 	if (!arrayOfObjects || !Array.isArray(arrayOfObjects))
-		throw new Error('Can\'t select checked users, array of user objects is missing.')
+		throw new Error('Can\'t select checked employees, array of employee objects is missing.')
 
 	const result = []
 	for (let group of arrayOfObjects) {

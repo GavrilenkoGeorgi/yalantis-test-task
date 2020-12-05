@@ -2,9 +2,9 @@ import React from 'react'
 import EmployeesByChar from './EmployeesByChar'
 
 const EmployeesList = ({ groups }) => {
-	return <>
-		<section className="employees-section">
-			<h1>Employees</h1>
+	return <section className="employees-section">
+		<h1>Employees</h1>
+		<div className="employees-list">
 			{groups && groups.map(group =>
 				<EmployeesByChar
 					key={group.letter}
@@ -12,8 +12,8 @@ const EmployeesList = ({ groups }) => {
 					list={group.employees}
 				/>
 			)}
-		</section>
-	</>
+		</div>
+	</section>
 }
 
 export default EmployeesList
