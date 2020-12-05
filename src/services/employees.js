@@ -8,7 +8,6 @@ const serviceUrl = 'https://yalantis-react-school-api.yalantis.com/api/task0/use
 const getAllEmployees = async () => {
 	const response = await axios.get(serviceUrl)
 	return response
-	// return await axios.get(serviceUrl)
 }
 
 export default { getAllEmployees }
