@@ -38,6 +38,10 @@ describe('<Employees /> component', () => {
 		expect(screen.getByText('No selected employees')).toBeInTheDocument()
 	})
 
+	it('sets list of employees into the localStorage', () => {
+		expect(window.localStorage.getItem('storedEmployees')).toBeTruthy()
+	})
+
 	it('shows selected birthdays list', async () => {
 		const { rerender } = view
 
