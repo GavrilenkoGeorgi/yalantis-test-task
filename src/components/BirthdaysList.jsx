@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { selectCheckedUsers, sortByMonth,
 	groupByMonth, getMonthFromDate } from '../utils/helpers'
 
-const BirtdayList = () => {
+const BirtdaysList = () => {
 
 	const employees = useSelector(state => state.employees)
 	const [checkedUsers, setCheckedUsers] = useState([])
@@ -62,4 +62,4 @@ const BirtdayList = () => {
 	</section>
 }
 
-export default BirtdayList
+export default BirtdaysList

@@ -4,7 +4,9 @@ import { render, screen, waitFor } from '@testing-library/react'
 import Employees from './Employees'
 import store from '../store/store'
 import { setEmployeesArray, setEmployeeCheckedStatus } from '../reducers/employeesReducer'
+import axiosMock from 'axios'
 
+import mockResponseData from '../fixtures/users'
 import groups from '../fixtures/parsedGroups.json'
 
 describe('<Employees /> component', () => {
@@ -13,6 +15,7 @@ describe('<Employees /> component', () => {
 	let view
 
 	beforeEach(() => {
+		axiosMock.get.mockResolvedValue({ data: mockResponseData })
 		store.dispatch(setEmployeesArray(groups))
 
 		view = render(
