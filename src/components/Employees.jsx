@@ -16,11 +16,11 @@ const Employees = () => {
 	const employees = useSelector(state => state.employees)
 	const [employeeGroups, setEmployeeGroups] = useState(null)
 
-	const prepareUserData = useCallback((arrayOfEmployees) => {
-		const sorted = sortByProperty('lastName', arrayOfEmployees)
+	const prepareUserData = useCallback(arrayOfEmployees => {
+		const withCheckBoxes = addCheckBoxField(arrayOfEmployees)
+		const sorted = sortByProperty('lastName', withCheckBoxes)
 		const grouped = groupByLetter(sorted)
-		const withCheckBoxes = addCheckBoxField(grouped)
-		const emptyGroups = getEmptyGroups(withCheckBoxes)
+		const emptyGroups = getEmptyGroups(grouped)
 		const allGroups = sortByProperty('letter', grouped.concat(emptyGroups))
 
 		return allGroups
