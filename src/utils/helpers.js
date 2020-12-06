@@ -148,15 +148,8 @@ export const groupByMonth = arrayOfObjects => { // and this!
 
 /**
  * Add checkboxes to the employees objects
- * @param {Object[]} arrayOfObjects - Array of grouped employees
- * @param {Object} group - Grouped of employees
- * @param {Object} group.letter - Group letter
- * @param {Object[]} group.employees - Group of eployees for current letter
+ * @param {Object[]} arrayOfObjects - Array of employees
  * @param {Object} employee - Employee object
- * @param {Object} employee.id - Employee id
- * @param {string} employee.firstName - Employee first name
- * @param {string} employee.lastName - Employee last name
- * @param {string} employee.dob - Employee date of birth
  *
  * @throws - Will throw an error if arg is missing or invalid
  *
@@ -164,14 +157,11 @@ export const groupByMonth = arrayOfObjects => { // and this!
  */
 
 export const addCheckBoxField = arrayOfObjects => {
-
 	if (!arrayOfObjects || !Array.isArray(arrayOfObjects))
 		throw new Error('Can\'t add checkboxes, array of employee objects is missing.')
 
 	for (let item of arrayOfObjects) {
-		for (let person of item.employees) {
-			person.checked = false
-		}
+		item.checked = false
 	}
 	return arrayOfObjects
 }

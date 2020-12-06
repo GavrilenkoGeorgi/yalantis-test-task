@@ -55,10 +55,8 @@ describe('Helper utils', () => {
 	})
 
 	it('"addCheckBoxField" adds checkbox field to the grouped employee objects', () => {
-		const withCheckBoxes = addCheckBoxField(groupByLetter(users))
-
-		const [ group ] = withCheckBoxes
-		const [ employee ] = group.employees
+		const withCheckBoxes = addCheckBoxField(users)
+		const [ employee ] = withCheckBoxes
 
 		expect(employee).toHaveProperty('checked', false)
 	})
