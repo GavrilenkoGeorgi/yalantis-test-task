@@ -1,16 +1,19 @@
 import employees from './employees'
 import axiosMock from 'axios'
+import { apiUrl } from './apiUrl'
 
 import mockResponseData from '../fixtures/users'
 
 describe('Employees service', () => {
-	test('fetches employees array from API', async () => {
-		const [ employee ] = mockResponseData
+	it('fetches employees array from API', async () => {
 		axiosMock.get.mockResolvedValue({ data: mockResponseData })
-		const response = await employees.getAllEmployees()
 
-		expect(response.data).toHaveLength(mockResponseData.length)
-		expect(response.data).toEqual(
+		const [ employee ] = mockResponseData
+		const data = await employees.getAllEmployees()
+
+		expect(axiosMock.get).toHaveBeenCalledWith(apiUrl)
+		expect(data).toHaveLength(mockResponseData.length)
+		expect(data).toEqual(
 			expect.arrayContaining([
 				expect.objectContaining(employee)
 			])

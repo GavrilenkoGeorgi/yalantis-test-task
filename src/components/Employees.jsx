@@ -31,7 +31,7 @@ const Employees = () => {
 		if (!expirationDate || (Date.now() > expirationDate)) {
 			// not set or expired
 			employeesService.getAllEmployees()
-				.then(({ data }) => {
+				.then(data => {
 					const parsedData = prepareUserData(data)
 					dispatch(setEmployeesArray(parsedData))
 					localStorageHelper.setEmployeesObject({
@@ -40,7 +40,7 @@ const Employees = () => {
 					})
 				})
 				.catch(error => {
-					console.error(error.message)
+					console.error(error)
 				})
 		} else { // restore saved state
 			const savedState = localStorageHelper.getEmployeesObjectProperty('employees')
