@@ -1,5 +1,6 @@
 import React from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
+import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './store/store'
 
@@ -12,15 +13,16 @@ describe('<App /> component', () => {
 	beforeEach(() => {
 		axiosMock.get.mockResolvedValue({ data: mockResponseData })
 		render(
-			<Provider store={store}>
-				<App />
-			</Provider>)
+			<BrowserRouter>
+				<Provider store={store}>
+					<App />
+				</Provider>
+			</BrowserRouter>)
 	})
 
 	it('renders employees page', async () => {
 		await waitFor(() => {
-			expect(screen.getByText('Employees')).toBeInTheDocument()
-			expect(screen.getByText('Employees birthday')).toBeInTheDocument()
+			expect(screen.getByText(/Завантажити список співробітників/)).toBeInTheDocument()
 		})
 	})
 })
