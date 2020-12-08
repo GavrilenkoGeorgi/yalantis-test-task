@@ -1,4 +1,5 @@
 import { letters, months } from './constants'
+import { showErrorMessage } from './errorHandling'
 
 /**
  * Sort array of objects by property
@@ -37,7 +38,7 @@ export const sortByMonth = arrayOfObjects => {
 	if (!arrayOfObjects || !Array.isArray(arrayOfObjects))
 		throw new Error('Can\'t sort, array of objects is missing.')
 
-	return arrayOfObjects.sort((a, b) => months.indexOf(a.month) - months.indexOf(b.month))
+	return arrayOfObjects.sort((a, b) => months.indexOf(a.groupName) - months.indexOf(b.groupName))
 }
 
 /**
@@ -73,10 +74,10 @@ export const getEmptyGroups = arrayOfObjects => {
 	const emptyGroups = []
 
 	for (let letter of alphabet) {
-		let index = arrayOfObjects.map(item => item.letter).indexOf(letter)
+		let index = arrayOfObjects.map(item => item.groupName).indexOf(letter)
 		if (index < 0) {
 			const emptyGroup = {
-				letter,
+				groupName: letter,
 				employees: []
 			}
 			emptyGroups.push(emptyGroup)
@@ -86,60 +87,87 @@ export const getEmptyGroups = arrayOfObjects => {
 }
 
 /**
- * Group array of employees by first letter of their lastName
- * @param {Object[]} arrayOfObjects - Array of employee objects
- * @param {Object} employee - Employee object
- * @param {string} employee.id - Employee id
- * @param {string} employee.firstName - Employee first name
- * @param {string} employee.lastName - Employee last name
- * @param {string} employee.dob - Employee date of birth
+ * Get grouper function based on property name
+ * @param {string} propName - Prop name
  *
  * @throws - Will throw an error if arg is missing or invalid
  *
- * @returns {Object[]} - Grouped array of employee objects
+ * @returns {function(): void} Grouper function
  */
 
-export const groupByLetter = arrayOfObjects => { // this!
+const getGrouperFunc = propName => {
+	let grouper
+	const validGroupingProps = ['lastName', 'dob']
 
-	if (!arrayOfObjects || !Array.isArray(arrayOfObjects))
-		throw new Error('Can\'t group by last name first letter, array of employee objects is missing.')
+	if (!validGroupingProps.includes(propName))
+		throw new Error(`Can't group by ${propName}`)
 
-	let data = arrayOfObjects.reduce((acc, item) => {
-		let letter = item.lastName[0]
-		if(!acc[letter]) acc[letter] = { letter, employees: [item] }
-		else acc[letter].employees.push(item)
-		return acc
-	}, {})
+	propName === 'lastName'
+		? grouper = getFirstLetterOfString
+		: grouper = getMonthFromDate
 
-	const result = Object.values(data)
-	return result
+	return grouper
 }
 
 /**
- * Group array of employees by birthday month
+ * Get first letter of the string
+ * @param {string} str - String to get first letter from
+ *
+ * @throws - Will throw an error if arg is missing or invalid
+ *
+ * @returns {string} First char of the given string
+ */
+
+const getFirstLetterOfString = str => {
+	if (!str.length)
+		throw new Error('String must be at least 1 char long.')
+	return str[0]
+}
+
+/**
+ * Get full month name from the date string
+ * @param {string} dateOfBirth - Date in ISO format
+ *
+ * @throws - Will throw an error if arg is missing or invalid
+ *
+ * @returns {string} - Full month name
+ */
+
+export const getMonthFromDate = dateOfBirth => {
+	const date = new Date(dateOfBirth)
+	if (!date)
+		throw new Error('Date string must be in ISO format.')
+	return months[date.getMonth()]
+}
+
+/**
+ * Group array of employees by grouped property
+ * @param {string} propertyName - Name of the property to sort by
  * @param {Object[]} arrayOfObjects - Array of employee objects
- * @param {Object} employee - Employee object
- * @param {string} employee.id - Employee id
- * @param {string} employee.firstName - Employee first name
- * @param {string} employee.lastName - Employee last name
- * @param {string} employee.dob - Employee date of birth
- * @param {boolean} employee.checked - Employee "checked" status
+ * @param {Object} group - Group object
+ * @param {string} group.groupName - Name of the group
+ * @param {string} group.employees - Array of employees for the current group
  *
  * @throws - Will throw an error if arg is missing or invalid
  *
  * @returns {Object[]} - Grouped array of employee objects
  */
 
-export const groupByMonth = arrayOfObjects => { // and this!
+export const groupByProperty = (propertyName, arrayOfObjects) => {
+	const grouper = getGrouperFunc(propertyName)
 
 	if (!arrayOfObjects || !Array.isArray(arrayOfObjects))
-		throw new Error('Can\'t group by month, array of employee objects is missing.')
+		throw new Error('Can\'t group by prop, array of objects is missing.')
 
 	let data = arrayOfObjects.reduce((acc, item) => {
-		let month = getMonthFromDate(item.dob)
-		if(!acc[month]) acc[month] = { month, employees: [item] }
-		else acc[month].employees.push(item)
-		return acc
+		try {
+			let groupName = grouper(item[propertyName])
+			if(!acc[groupName]) acc[groupName] = { groupName, employees: [item] }
+			else acc[groupName].employees.push(item)
+			return acc
+		} catch (error) {
+			showErrorMessage(error)
+		}
 	}, {})
 
 	const result = Object.values(data)
@@ -198,16 +226,4 @@ export const selectCheckedEmployees = arrayOfObjects => {
 	}
 
 	return result
-}
-
-/**
- * Get full month name from the date string
- * @param {string} dateOfBirth - Date in ISO format
- *
- * @returns {string} - Full month name
- */
-
-export const getMonthFromDate = dateOfBirth => {
-	const date = new Date(dateOfBirth)
-	return months[date.getMonth()]
 }

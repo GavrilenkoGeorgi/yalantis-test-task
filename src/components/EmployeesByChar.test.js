@@ -16,7 +16,7 @@ describe('<EmployeesByChar /> component', () => {
 			<Provider store={store}>
 				<EmployeesByChar
 					key={group.letter}
-					letter={group.letter}
+					groupName={group.groupName}
 					list={group.employees}
 				/>
 			</Provider>)

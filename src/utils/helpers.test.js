@@ -1,5 +1,5 @@
-import { sortByProperty, expiresInDays, groupByLetter, addCheckBoxField,
-	getEmptyGroups, groupByMonth, selectCheckedEmployees, getMonthFromDate } from './helpers'
+import { sortByProperty, expiresInDays, addCheckBoxField, groupByProperty,
+	getEmptyGroups, selectCheckedEmployees, getMonthFromDate } from './helpers'
 import users from '../fixtures/users.json'
 import parsedGroups from '../fixtures/parsedGroups.json'
 
@@ -18,44 +18,34 @@ describe('Helper utils', () => {
 	})
 
 	it('"sortByProperty" util sorts array of objects', () => {
-		const sorted = sortByProperty('lastName', users)
+		const sorted = sortByProperty('lastName', [ ...users ])
 		const [ employees ] = sorted
 		expect(employees.lastName).toEqual('Carson')
 	})
 
 	it('"sortByProperty" throws an error if supplied with invalid arguments', () => {
-		expect(() => sortByProperty(users))
+		expect(() => sortByProperty([ ...users ]))
 			.toThrowError('Can\'t sort, property name is missing.')
 
 		expect(() => sortByProperty('employees'))
 			.toThrowError('Can\'t sort, array of objects is missing.')
 	})
 
-	it('"groupByLetter" groups array of employeess by first letter of the last name', () => {
-		const grouped = groupByLetter(users)
+	it('"groupByProperty" groups array of employeess by first letter of the last name', () => {
+		const grouped = groupByProperty('lastName', [ ...users ])
 		const [ group ] = grouped
 
-		expect(group.employees).toHaveLength(1)
-		expect(group.letter).toEqual('C')
+		expect(group.employees).toHaveLength(2)
+		expect(group.groupName).toEqual('G')
 	})
 
-	it('"groupByLetter" throws an error if supplied with invalid arguments', () => {
-		expect(() => groupByLetter('employees'))
-			.toThrowError('Can\'t group by last name first letter, array of employee objects is missing.')
-	})
-
-	it('"groupByMonth" groups array of employees by month', () => {
-		const grouped = groupByMonth(users)
-		expect(grouped).toHaveLength(5)
-	})
-
-	it('"groupByMonth" throws an error if supplied with invalid arguments', () => {
-		expect(() => groupByMonth('employees'))
-			.toThrowError('Can\'t group by month, array of employee objects is missing.')
+	it('"groupByProperty" throws an error if supplied with invalid arguments', () => {
+		expect(() => groupByProperty('lastName'))
+			.toThrowError('Can\'t group by prop, array of objects is missing.')
 	})
 
 	it('"addCheckBoxField" adds checkbox field to the grouped employee objects', () => {
-		const withCheckBoxes = addCheckBoxField(users)
+		const withCheckBoxes = addCheckBoxField([ ...users ])
 		const [ employee ] = withCheckBoxes
 
 		expect(employee).toHaveProperty('checked', false)
@@ -67,7 +57,7 @@ describe('Helper utils', () => {
 	})
 
 	it('"getEmptyGroups" correctly selects missing empty groups', () => {
-		const grouped = groupByLetter(users)
+		const grouped = groupByProperty('lastName', [ ...users ])
 		const emptyGroups = getEmptyGroups(grouped)
 
 		// "26" being the number of letters in the alphabet

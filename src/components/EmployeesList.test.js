@@ -23,6 +23,6 @@ describe('<EmployeesList /> component', () => {
 
 	it('render list of employees grouped by letter', () => {
 		expect(screen.getByText(`${employee.lastName} ${employee.firstName}`)).toBeInTheDocument()
-		expect(screen.getByText(firstGroup.letter)).toBeInTheDocument()
+		expect(screen.getByText(firstGroup.groupName)).toBeInTheDocument()
 	})
 })

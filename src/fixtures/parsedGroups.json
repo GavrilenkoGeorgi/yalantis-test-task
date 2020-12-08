@@ -1,6 +1,6 @@
 [
 	{
-		"letter": "A",
+		"groupName": "A",
 		"employees": [
 			{
 				"id":"5e00928d1a9ac4bd431ff876",
@@ -19,7 +19,7 @@
 		]
 	},
 	{
-		"letter": "B",
+		"groupName": "B",
 		"employees": [
 			{
 				"id": "5e00928dac694570760105c4",

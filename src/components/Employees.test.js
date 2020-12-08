@@ -27,7 +27,7 @@ describe('<Employees /> component', () => {
 
 	it('renders list of employees component', () => {
 		expect(screen.getByText(`${employee.lastName} ${employee.firstName}`)).toBeInTheDocument()
-		expect(screen.getByText(firstGroup.letter)).toBeInTheDocument()
+		expect(screen.getByText(firstGroup.groupName)).toBeInTheDocument()
 	})
 
 	it('renders list of birthdays component', () => {
@@ -46,7 +46,7 @@ describe('<Employees /> component', () => {
 		const { rerender } = view
 
 		store.dispatch(setEmployeesArray(groups))
-		store.dispatch(setEmployeeCheckedStatus(secondGroup.letter, employee.id))
+		store.dispatch(setEmployeeCheckedStatus(secondGroup.groupName, employee.id))
 
 		rerender(
 			<Provider store={store}>

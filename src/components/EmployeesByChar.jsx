@@ -5,16 +5,16 @@ import { setEmployeeCheckedStatus } from '../reducers/employeesReducer'
 
 import CheckBox from './CheckBox'
 
-const EmployeesByChar = ({ letter, list }) => {
+const EmployeesByChar = ({ groupName, list }) => {
 
 	const dispatch = useDispatch()
 
-	const checkEmployee = (letter, id) => {
-		dispatch(setEmployeeCheckedStatus(letter, id))
+	const checkEmployee = (groupName, id) => {
+		dispatch(setEmployeeCheckedStatus(groupName, id))
 	}
 
 	return <div className="employees-by-letter">
-		<h2>{letter}</h2>
+		<h2>{groupName}</h2>
 		<ul className="employee-list">
 			{list.length
 				? list.map(employee =>
@@ -29,7 +29,7 @@ const EmployeesByChar = ({ letter, list }) => {
 								checked={employee.checked}
 								label={employee.checked ? 'checked' : ''}
 								aria-label={`check-employee-${employee.lastName}`}
-								onChange={() => checkEmployee(letter, employee.id)}
+								onChange={() => checkEmployee(groupName, employee.id)}
 							/>
 						</span>
 					</li>)
@@ -40,7 +40,7 @@ const EmployeesByChar = ({ letter, list }) => {
 }
 
 EmployeesByChar.propTypes = {
-	letter: PropTypes.string.isRequired,
+	groupName: PropTypes.string.isRequired,
 	list: PropTypes.array.isRequired
 }
 
