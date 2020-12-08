@@ -28,6 +28,26 @@ main {
 	padding: 1rem 0;
 }
 
+.home-container {
+	margin: 0 auto;
+	padding: 4rem;
+	text-align: center;
+}
+
+.greeting {
+	padding: 2rem;
+}
+
+.greeting > a {
+	font-size: 150%;
+}
+
+.greeting > p {
+	color: gray;
+	font-style: italic;
+	padding: .7rem 0;
+}
+
 .employees-section {
 	border-right: .1rem solid lightgrey;
 }
