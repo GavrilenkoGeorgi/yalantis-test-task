@@ -30,7 +30,7 @@ describe('<BirthdaysList /> component', () => {
 
 	it('shows user in the list if it he was checked', async () => {
 		const { rerender } = view
-		store.dispatch(setEmployeeCheckedStatus(group.letter, employee.id))
+		store.dispatch(setEmployeeCheckedStatus(group.groupName, employee.id))
 		rerender(
 			<Provider store={store}>
 				<BirthdaysList />

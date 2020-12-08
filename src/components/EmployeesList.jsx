@@ -7,8 +7,8 @@ const EmployeesList = ({ groups }) => {
 		<div className="employees-list">
 			{groups && groups.map(group =>
 				<EmployeesByChar
-					key={group.letter}
-					letter={group.letter}
+					key={group.groupName}
+					groupName={group.groupName}
 					list={group.employees}
 				/>
 			)}

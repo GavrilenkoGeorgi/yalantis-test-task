@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setEmployeesArray } from '../reducers/employeesReducer'
 import employeesService from '../services/employees'
 import localStorageHelper from '../utils/localStorageHelper'
-import { sortByProperty, getEmptyGroups, groupByLetter,
+import { sortByProperty, getEmptyGroups, groupByProperty,
 	expiresInDays, addCheckBoxField } from '../utils/helpers'
 
 import EmployeesList from './EmployeesList'
@@ -19,9 +19,9 @@ const Employees = () => {
 	const prepareUserData = useCallback(arrayOfEmployees => {
 		const withCheckBoxes = addCheckBoxField(arrayOfEmployees)
 		const sorted = sortByProperty('lastName', withCheckBoxes)
-		const grouped = groupByLetter(sorted)
+		const grouped = groupByProperty('lastName', sorted)
 		const emptyGroups = getEmptyGroups(grouped)
-		const allGroups = sortByProperty('letter', grouped.concat(emptyGroups))
+		const allGroups = sortByProperty('groupName', grouped.concat(emptyGroups))
 
 		return allGroups
 	}, [])

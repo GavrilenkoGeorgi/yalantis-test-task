@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { selectCheckedEmployees, sortByMonth,
-	groupByMonth, getMonthFromDate } from '../utils/helpers'
+import { selectCheckedEmployees, sortByMonth, groupByProperty,
+	getMonthFromDate } from '../utils/helpers'
 
 const BirtdaysList = () => {
 
@@ -18,7 +18,7 @@ const BirtdaysList = () => {
 
 	useEffect(() => {
 		if (checkedEmployees.length) {
-			const grouped = groupByMonth(checkedEmployees)
+			const grouped = groupByProperty('dob', checkedEmployees)
 			setGroupedEmployees(sortByMonth(grouped))
 		} else setGroupedEmployees([])
 	}, [checkedEmployees])
@@ -48,8 +48,8 @@ const BirtdaysList = () => {
 		<div className="birthdays-list">
 			{groupedEmployees.length
 				? groupedEmployees.map(group =>
-					<div key={group.month} className="month-group">
-						<h2>{group.month}</h2>
+					<div key={group.groupName} className="month-group">
+						<h2>{group.groupName}</h2>
 						<ul>
 							{group.employees.map(person =>
 								<li key={person.id}>

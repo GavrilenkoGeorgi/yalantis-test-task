@@ -7,9 +7,9 @@ const employeesReducer = (state = {
 		return { ...state, employees: action.data }
 	case 'CHECK_EMPLOYEE': {
 		const { data } = action
-		// get group of employees by letter
+		// get group of employees by group name
 		const { employees } =
-			state.employees.find(group => group.letter === data.letter)
+			state.employees.find(group => group.groupName === data.groupName)
 		// update employee
 		const updatedEmployees = employees.map(employee =>
 			employee.id !== data.id
@@ -17,7 +17,7 @@ const employeesReducer = (state = {
 				: { ...employee, checked: !employee.checked })
 
 		return { ...state, employees: state.employees.map(group =>
-			group.letter !== data.letter ? group : { ...group, employees: updatedEmployees }) }
+			group.groupName !== data.groupName ? group : { ...group, employees: updatedEmployees }) }
 	}
 	default:
 		return state
@@ -39,12 +39,12 @@ export const setEmployeesArray = data => {
 /**
  * Check employee
  */
-export const setEmployeeCheckedStatus = (letter, id) => {
+export const setEmployeeCheckedStatus = (groupName, id) => {
 	return async dispatch => {
 		dispatch ({
 			type: 'CHECK_EMPLOYEE',
 			data: {
-				letter,
+				groupName,
 				id
 			}
 		})

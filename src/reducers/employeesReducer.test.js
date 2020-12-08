@@ -34,7 +34,7 @@ describe('Employees reducer', () => {
 		const updatedState = employeesReducer(initialState, {
 			type: 'CHECK_EMPLOYEE',
 			data: {
-				letter: firstGroup.letter,
+				groupName: firstGroup.groupName,
 				id: employee.id
 			}
 		})
