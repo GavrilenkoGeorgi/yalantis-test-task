@@ -1,8 +1,12 @@
 import React from 'react'
-import { Employees } from './components'
+import { Switch, Route } from 'react-router-dom'
+import { Home, Employees } from './components'
 
 export const App = () => {
-	return <Employees />
+	return <Switch>
+		<Route exact path="/" component={Home} />
+		<Route exact path="/employees" component={Employees} />
+	</Switch>
 }
 
 export default App

@@ -55,12 +55,12 @@ const Employees = () => {
 		localStorageHelper.updateEmployeesObject(employees)
 	}, [employees] )
 
-	return <>
+	return <section className="employees-section-layout">
 		{employees && <>
 			<EmployeesList groups={employeeGroups}/>
 			<BirtdaysList />
 		</>}
-	</>
+	</section>
 
 }
 

@@ -1,5 +1,6 @@
 :root {
 	--h1-margin-bottom: 1rem;
+	--h1-bold: 600;
 }
 
 html {
@@ -22,10 +23,32 @@ body, h1, h2, h3, h4, h5, h6, p, ol, ul {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-main {
+.employees-section-layout {
 	display: grid;
 	grid-template-columns: 3fr 1fr;
 	padding: 1rem 0;
+}
+
+.home-container {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	text-align: center;
+}
+
+.greeting {
+	padding: 2rem;
+}
+
+.greeting > a {
+	font-size: 150%;
+}
+
+.greeting > p {
+	color: gray;
+	font-style: italic;
+	padding: .7rem 0;
 }
 
 .employees-section {
@@ -34,15 +57,14 @@ main {
 
 .employees-section > h1 {
 	text-align: center;
+	font-weight: var(--h1-bold);
 	margin-bottom: var(--h1-margin-bottom);
-	width: 100%;
 }
 
 .employees-list {
 	display: grid;
 	gap: .6rem;
 	grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-	width: 100%;
 	padding: 0 .6rem;
 }
 
@@ -69,8 +91,8 @@ main {
 
 .birthdays-section > h1 {
 	text-align: center;
+	font-weight: var(--h1-bold);
 	margin-bottom: var(--h1-margin-bottom);
-	width: 100%;
 }
 
 .no-emps-to-show-message {
